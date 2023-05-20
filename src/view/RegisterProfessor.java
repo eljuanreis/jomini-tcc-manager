@@ -67,7 +67,7 @@ public class RegisterProfessor extends JFrame {
 		textField.setBounds(22, 79, 160, 20);
 		contentPane.add(textField);
 
-		this.controller = new RegisterProfessorController();
+		this.controller = new RegisterProfessorController(textField);
 
 		addWindowListener(new WindowAdapter() {
             @Override
@@ -81,8 +81,9 @@ public class RegisterProfessor extends JFrame {
               		JCheckBox chckbxOpt = new JCheckBox(options[i]);
               		chckbxOpt.setName("checkbox_" + i);
             		chckbxOpt.setBounds(22, initialPosition, 200, 23);
-            		contentPane.add(chckbxOpt);
             		chckbxOpt.addActionListener(controller);
+
+            		contentPane.add(chckbxOpt);
             		
             		initialPosition += 25;
                 }

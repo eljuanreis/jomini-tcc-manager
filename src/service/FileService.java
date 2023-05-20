@@ -55,7 +55,7 @@ public class FileService {
 		print.close();
 	}
 	
-	public String readData(String fileName, String monthName, int year, int valueExpected, boolean checkValueExpected) throws IOException {
+	public String readData(String fileName) throws IOException {
 		File file = new File(makeFilePath(fileName));
 				
 		if (file.exists() && file.isFile()) {
