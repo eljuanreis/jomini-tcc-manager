@@ -13,7 +13,7 @@ import constants.Configs;
 public class FileService {
 	
 	public void run(String fileName, String data) throws Exception {
-		File file = new File(fileName);
+		File file = new File(makeFilePath(fileName));
 		
 		if (file.exists() && file.isFile()) {
 			appendFile(file, data);

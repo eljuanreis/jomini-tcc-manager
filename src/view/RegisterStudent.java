@@ -25,8 +25,8 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
 public class RegisterStudent extends JFrame {
-	private JTextField textField;
-	private JTextField textField_1;
+	private JTextField nomeAluno;
+	private JTextField raAluno;
 	private StudentController controller;
 
 	/**
@@ -52,10 +52,10 @@ public class RegisterStudent extends JFrame {
 	 * @throws InterruptedException 
 	 */
 	public RegisterStudent() throws InterruptedException {
+
 		setTitle("Cadastro de estudantes - " + Configs.name);
 		setResizable(false);
-		this.controller = new StudentController();
-
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		getContentPane().setLayout(null);
@@ -83,12 +83,12 @@ public class RegisterStudent extends JFrame {
 		getContentPane().add(panel_1);
 		panel_1.setLayout(new GridLayout(2, 2, 0, 20));
 		
-		textField = new JTextField();
-		panel_1.add(textField);
-		textField.setColumns(10);
+		nomeAluno = new JTextField();
+		panel_1.add(nomeAluno);
+		nomeAluno.setColumns(10);
 		
-		textField_1 = new JTextField();
-		textField_1.addKeyListener(new KeyAdapter() {
+		raAluno = new JTextField();
+		raAluno.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
 				if (!ValidateField.validateInteger(e.getKeyChar())) {
@@ -96,8 +96,8 @@ public class RegisterStudent extends JFrame {
 				}
 			}
 		});
-		panel_1.add(textField_1);
-		textField_1.setColumns(10);
+		panel_1.add(raAluno);
+		raAluno.setColumns(10);
 		
 		JLabel lblNewLabel_3 = new JLabel("Por favor, preencha os dados abaixo:");
 		lblNewLabel_3.setBounds(10, 36, 182, 14);
@@ -108,15 +108,10 @@ public class RegisterStudent extends JFrame {
 		getContentPane().add(panel_2);
 		panel_2.setLayout(new GridLayout(1, 2, 50, 0));
 		
-		JButton btnNewButton = new JButton("Voltar");
-		panel_2.add(btnNewButton);
+		this.controller = new StudentController(this.nomeAluno, this.raAluno);
 		
 		JButton btnNewButton_1 = new JButton("Salvar");
-		btnNewButton_1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				save();
-			}
-		});
+		btnNewButton_1.addActionListener(this.controller);
 		panel_2.add(btnNewButton_1);
 		
 		JSeparator separator = new JSeparator();
@@ -135,16 +130,5 @@ public class RegisterStudent extends JFrame {
 		JLabel softwareVersionLabel = new JLabel(Configs.version);
 		softwareVersionLabel.setBounds(10, 236, 46, 14);
 		getContentPane().add(softwareVersionLabel);
-	}
-	
-	private void save() {
-		String nome = this.textField.getText();
-		String RA = this.textField_1.getText();
-		
-		String[] data = new String[2];
-		data[0] = nome;
-		data[1] = RA;
-		
-		this.controller.save(data);
 	}
 }
