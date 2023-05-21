@@ -10,13 +10,13 @@ import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
+import model.Group;
 import service.FileService;
 
 public class GroupController implements ActionListener {
 	// Configurações do arquivo
 	private final String fileName = "Groups";
 	private FileService service;
-	private final String formatLine = "%s;%s;%s;";
 
 	// Campos que serão guardados
 	private JTextField tema;
@@ -47,23 +47,19 @@ public class GroupController implements ActionListener {
 		String tema = this.tema.getText();
 		String area = (String) this.modelAreas.getSelectedItem();
 
-		int alunosSize = this.modelStudents.getSize();
+		int alunosSize = this.modelList.getSize();
+
 		StringBuffer alunos = new StringBuffer();
 		for (int i = 0; i < alunosSize; i++) {
-			String aluno = this.modelStudents.getElementAt(i);
+			String aluno = this.modelList.getElementAt(i);
 
-			alunos.append (aluno);
+			alunos.append(aluno);
 		}
 		
-		StringBuffer dataFile = new StringBuffer();
-		
-		String fixedData = String.format(formatLine, professor, tema, area);
-		
-		dataFile.append(fixedData);
-		dataFile.append(alunos.toString());
+		Group group = new Group(professor, tema, area, alunos.toString());
 		
 		try {
-			this.service.run(this.fileName, dataFile.toString());
+			this.service.run(this.fileName, group.toString());
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
@@ -72,7 +68,7 @@ public class GroupController implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		String cmd = e.getActionCommand();
-		System.out.println(cmd);
+
 		if (cmd.contains("Criar")) {
 			this.save();
 		}
@@ -185,7 +181,7 @@ public class GroupController implements ActionListener {
 		this.modelList.remove(position);
 	}
 
-	public void loadProfessorArea(JComboBox combo) {
+	private void loadProfessorArea(JComboBox combo) {
 		String area = (String) combo.getSelectedItem();
 
 		if (area.length() <= 1) {
@@ -214,6 +210,10 @@ public class GroupController implements ActionListener {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	public static String genCode() {
+		return "";
 	}
 
 }

@@ -60,7 +60,7 @@ public class CreateGroup extends JFrame {
 	 */
 	public CreateGroup() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 684, 410);
+		setBounds(100, 100, 477, 501);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
