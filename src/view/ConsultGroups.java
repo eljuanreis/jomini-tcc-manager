@@ -5,21 +5,40 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import controller.ConsultGroupController;
+import controller.RegisterProfessorController;
+import threads.TimeThread;
+
 import javax.swing.JLabel;
 import java.awt.Font;
+
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 import javax.swing.JScrollPane;
 import javax.swing.JTextPane;
 import java.awt.GridLayout;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+
 import javax.swing.JTable;
 import java.awt.Color;
 import javax.swing.JScrollBar;
 import javax.swing.JEditorPane;
 import javax.swing.JTree;
+import javax.swing.table.DefaultTableModel;
+
+import constants.Configs;
+import javax.swing.JSeparator;
+import javax.swing.SwingConstants;
 
 public class ConsultGroups extends JFrame {
 
+	private ConsultGroupController controller;
 	private JPanel contentPane;
+	private DefaultComboBoxModel<String> modelAreas = new DefaultComboBoxModel<String>();
+	private JTable table;
+	private DefaultTableModel modelTable = new DefaultTableModel();
 
 	/**
 	 * Launch the application.
@@ -41,8 +60,11 @@ public class ConsultGroups extends JFrame {
 	 * Create the frame.
 	 */
 	public ConsultGroups() {
+		setTitle("Consulta de grupo - " + Configs.name);
+		setResizable(false);
+
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 500, 400);
+		setBounds(100, 100, 500, 432);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -50,33 +72,67 @@ public class ConsultGroups extends JFrame {
 		contentPane.setLayout(null);
 		
 		JLabel lblConsultarGrupos = new JLabel("Consultar Grupos");
-		lblConsultarGrupos.setFont(new Font("Tahoma", Font.BOLD, 18));
 		lblConsultarGrupos.setBounds(10, 11, 175, 31);
+		lblConsultarGrupos.setFont(new Font("Tahoma", Font.BOLD, 18));
 		contentPane.add(lblConsultarGrupos);
 		
 		JLabel lblNewLabel_2 = new JLabel("Área de Trabalho");
 		lblNewLabel_2.setBounds(10, 59, 160, 14);
 		contentPane.add(lblNewLabel_2);
 		
-		JComboBox comboBox = new JComboBox();
-		comboBox.setBounds(10, 75, 260, 22);
-		contentPane.add(comboBox);
-		
-		JLabel lblNewLabel = new JLabel("Código");
-		lblNewLabel.setBounds(10, 121, 46, 14);
-		contentPane.add(lblNewLabel);
-		
-		JLabel lblNewLabel_1 = new JLabel("Tema");
-		lblNewLabel_1.setBounds(157, 121, 46, 14);
-		contentPane.add(lblNewLabel_1);
+		JComboBox comboArea = new JComboBox(modelAreas);
+		comboArea.setBounds(10, 75, 260, 22);
+		comboArea.setName("Areas");
+		contentPane.add(comboArea);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 141, 464, 220);
+		scrollPane.setBounds(10, 108, 464, 253);
 		contentPane.add(scrollPane);
 		
-		JTextPane txtpnEgseg = new JTextPane();
-		scrollPane.setViewportView(txtpnEgseg);
-		txtpnEgseg.setEditable(false);
-		txtpnEgseg.setText("000000\t\t---------------\r\n\r\n000000\t\t---------------\r\n\r\n000000\t\t---------------\r\n\r\n000000\t\t---------------\r\n\r\n000000\t\t---------------\r\n\r\n000000\t\t---------------\r\n\r\n000000\t\t---------------\r\n\r\n000000\t\t---------------\r\n\r\n000000\t\t---------------\r\n\r\n000000\t\t---------------\r\n\r\n000000\t\t---------------\r\n\r\n000000\t\t---------------\r\n\r\n000000\t\t---------------\r\n\r\n000000\t\t---------------\r\n\r\n000000\t\t---------------\r\n\r\n000000\t\t---------------\r\n\r\n000000\t\t---------------\r\n\r\n000000\t\t---------------\r\n\r\n000000\t\t---------------\r\n\r\n000000\t\t---------------\r\n\r\n");
+		table = new JTable();
+		table.setEnabled(false);
+		table.setModel(modelTable);
+		scrollPane.setViewportView(table);
+		
+		JSeparator separator = new JSeparator();
+		separator.setBounds(10, 372, 464, 8);
+		contentPane.add(separator);
+		
+		JLabel labelDate = new JLabel("....");
+		labelDate.setHorizontalTextPosition(SwingConstants.LEFT);
+		labelDate.setHorizontalAlignment(SwingConstants.RIGHT);
+		labelDate.setBounds(292, 372, 182, 14);
+		contentPane.add(labelDate);
+		
+		TimeThread timeThread = new TimeThread(labelDate);
+		timeThread.start();
+
+		JLabel softwareVersionLabel = new JLabel(Configs.version);
+		softwareVersionLabel.setBounds(10, 374, 46, 14);
+		contentPane.add(softwareVersionLabel);
+
+		//controller
+		this.controller = new ConsultGroupController(this.modelAreas, this.modelTable);
+
+		//listeners
+		comboArea.addActionListener(this.controller);
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowOpened(WindowEvent e) {
+				// Carrega lista inicial de áreas
+				String[] areas = RegisterProfessorController.areas;
+
+				modelAreas.addElement(" ");
+
+				for (String element : areas) {
+					modelAreas.addElement(element);
+				}
+				
+				// Popula os grupos na tabela
+				controller.initListingTable(controller.loadGroups(""));
+
+			}
+		});
+	
 	}
 }
