@@ -178,6 +178,10 @@ public class GroupController implements ActionListener {
 	}
 
 	public void removeStudent(int position) {
+		if (this.modelList.size() == 0) {
+			JOptionPane.showMessageDialog(null, "Não há o que remover");
+			return;
+		}
 		this.modelList.remove(position);
 	}
 
@@ -211,9 +215,4 @@ public class GroupController implements ActionListener {
 			e.printStackTrace();
 		}
 	}
-	
-	public static String genCode() {
-		return "";
-	}
-
 }

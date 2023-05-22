@@ -4,7 +4,7 @@ public abstract class Configs {
 	/**
 	 * Informações sobre o software
 	 */
-	public static final String name = "Trabalho de ED";
+	public static final String name = "Jomini - TCC Manager";
 	public static final String version = "1.0.0";
 	
 	/**
