@@ -1,6 +1,7 @@
 package model;
 
 public class Group {
+
 	private String code;
 	private String professor;
 	private String area;
@@ -28,6 +29,46 @@ public class Group {
 		dataFile.append(students + "\r\n");
 		
 		return dataFile.toString();
+	}
+	
+	public String getCode() {
+		return code;
+	}
+	
+	public void setCode(String code) {
+		this.code = code;
+	}
+	
+	public String getProfessor() {
+		return professor;
+	}
+	
+	public void setProfessor(String professor) {
+		this.professor = professor;
+	}
+	
+	public String getArea() {
+		return area;
+	}
+	
+	public void setArea(String area) {
+		this.area = area;
+	}
+	
+	public String getTema() {
+		return tema;
+	}
+	
+	public void setTema(String tema) {
+		this.tema = tema;
+	}
+	
+	public String getStudents() {
+		return students;
+	}
+	
+	public void setStudents(String students) {
+		this.students = students;
 	}
 	
 }
