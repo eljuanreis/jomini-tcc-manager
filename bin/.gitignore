@@ -1,3 +1,6 @@
-/view/
-/controller/
 /constants/
+/controller/
+/model/
+/service/
+/threads/
+/view/

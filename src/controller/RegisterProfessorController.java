@@ -16,8 +16,6 @@ public class RegisterProfessorController implements ActionListener {
 	private final String formatLine = "%s;%s\r\n";
 
 	// Campos que serão guardados
-	public static final String[] areas = { "Segurança", "Programação", "Design", "Engenharia de software", "Redes",
-			"Banco de dados" };
 
 	private JTextField name;
 	private int[] areasSelected = new int[6];
@@ -40,7 +38,7 @@ public class RegisterProfessorController implements ActionListener {
 
 		for (int i = 0; i < length; i++) {
 			if (areasSelected[i] == 1) {
-				String area = areas[i];
+				String area = String.valueOf(i);
 				areasString.append(area + ";");
 			}
 		}

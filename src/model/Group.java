@@ -1,14 +1,16 @@
 package model;
 
 public class Group {
+	private String code;
 	private String professor;
 	private String area;
 	private String tema;
 	private String students;
 	
-	private final String formatLine = "%s;%s;%s;";
+	private final String formatLine = "%s;%s;%s;%s;";
 	
-	public Group(String professor, String area, String tema, String students) {
+	public Group(String code, String professor, String area, String tema, String students) {
+		this.code = code;
 		this.professor = professor;
 		this.area = area;
 		this.tema = tema;
@@ -19,7 +21,7 @@ public class Group {
 	public String toString() {
 		StringBuffer dataFile = new StringBuffer();
 
-		String fixedData = String.format(formatLine, professor, tema, area);
+		String fixedData = String.format(formatLine, code, professor, tema, area);
 		
 		dataFile.append(fixedData);
 

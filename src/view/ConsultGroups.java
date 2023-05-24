@@ -120,7 +120,7 @@ public class ConsultGroups extends JFrame {
 			@Override
 			public void windowOpened(WindowEvent e) {
 				// Carrega lista inicial de áreas
-				String[] areas = RegisterProfessorController.areas;
+				String[] areas = Configs.areas;
 
 				modelAreas.addElement(" ");
 

@@ -6,6 +6,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import constants.Configs;
 import controller.RegisterProfessorController;
 
 import javax.swing.JLabel;
@@ -72,7 +73,7 @@ public class RegisterProfessor extends JFrame {
 		addWindowListener(new WindowAdapter() {
             @Override
             public void windowOpened(WindowEvent e) {
-                String[] options = RegisterProfessorController.areas;
+                String[] options = Configs.areas;
                 
                 int initialPosition = 140;
                 int length = options.length;

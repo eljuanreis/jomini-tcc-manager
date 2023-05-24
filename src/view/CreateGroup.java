@@ -211,12 +211,14 @@ public class CreateGroup extends JFrame {
 				}
 
 				// Carrega lista inicial de áreas
-				String[] areas = RegisterProfessorController.areas;
+				String[] areas = Configs.areas;
 
 				modelAreas.addElement(" ");
 
+				int cont = 0;
 				for (String element : areas) {
-					modelAreas.addElement(element);
+					modelAreas.addElement(cont + " - " + element);
+					cont++;
 				}
 
 			}
