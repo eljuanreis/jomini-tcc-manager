@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JTextField;
 
 import service.FileService;
 
@@ -14,25 +15,39 @@ import br.edu.fateczl.ObjectList;
 
 public class SearchGroupController implements ActionListener {
 
-	private DefaultComboBoxModel<String> comboBox;
+	private DefaultComboBoxModel<String> comboBoxList;
+	private JTextField searchBox;
 	
-	public DefaultComboBoxModel<String> getComboBox() {
-		return comboBox;
+	public SearchGroupController(JTextField searchBox) {
+		this.searchBox = searchBox;
+	}
+	
+	public JTextField getSearchBox() {
+		return searchBox;
 	}
 
-	public void setComboBox(DefaultComboBoxModel<String> comboBox) {
-		this.comboBox = comboBox;
+	public void setSearchBox(JTextField searchBox) {
+		this.searchBox = searchBox;
+	}
+
+	public DefaultComboBoxModel<String> comboBoxList() {
+		return comboBoxList;
+	}
+
+	public void setComboBox(DefaultComboBoxModel<String> comboBoxList) {
+		this.comboBoxList = comboBoxList;
 	}
 
 	private FileService fileCtrl = new FileService();
 	private String groupsData;
-	private ObjectList groups = new ObjectList();
+	private ObjectList groups;
 	
 	private void loadData() {
 		try {
 			groupsData = fileCtrl.readData("Groups");
 			String[] GroupsByLine = groupsData.split("\\r\\n");
 			String line[];
+			groups = new ObjectList();
 			
 			int groupsSize = GroupsByLine.length;
 			Group g;
@@ -59,15 +74,15 @@ public class SearchGroupController implements ActionListener {
 	
 	public void searchGroup() {
 		loadData();
-		String code = "3";
 		int groupsSize = groups.size();
+		String code = this.searchBox.getText();
 		Group g;
 		ObjectList groupsByCode = new ObjectList();
 		
 		for (int i = 0; i < groupsSize; i++) {
 			try {
 				g = (Group) groups.get(i);
-				if (g.getCode().contains(code)) {
+				if (g.getCode().substring(0, code.length()).contains(code)) {
 					groupsByCode.addLast(g);
 				}
 			} catch (Exception e) {
@@ -76,18 +91,15 @@ public class SearchGroupController implements ActionListener {
 		}
 		
 		int lSize = groupsByCode.size();
-		this.comboBox.removeAllElements();
+		comboBoxList.removeAllElements();
 		for (int i = 0; i < lSize; i++) {
 			try {
 				g = (Group) groupsByCode.get(i);
-				this.comboBox.addElement(g.getCode());
+				comboBoxList.addElement(g.getCode());
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
-		System.out.println("Lista");
-		
-		// String code = contentPane.getText();
 	}
 	
 	@Override

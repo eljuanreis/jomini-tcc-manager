@@ -52,9 +52,9 @@ public class SearchGroup extends JFrame {
 	 * Create the frame.
 	 */
 	public SearchGroup() {
-		this.controller = new SearchGroupController();
+		this.controller = new SearchGroupController(searchBox);
 		
-				setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -77,6 +77,8 @@ public class SearchGroup extends JFrame {
 		searchBox.setBounds(135, 123, 163, 20);
 		contentPane.add(searchBox);
 		searchBox.setColumns(10);
+		
+		controller.setSearchBox(searchBox);
 		
 		JLabel lblSearch = new JLabel("Código do grupo");
 		lblSearch.setHorizontalAlignment(SwingConstants.CENTER);
