@@ -12,4 +12,10 @@ public abstract class Configs {
 	 */
 	public static final String dataDirectory = "C:\\temp";
 	public static final String dataFileType = "csv";
+	
+	/**
+	 * Areas de trabalho
+	 */
+	public static final String[] areas = { "Segurança", "Programação", "Design", "Engenharia de software", "Redes",
+	"Banco de dados" };
 }
