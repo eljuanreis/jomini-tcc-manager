@@ -7,6 +7,7 @@ import javax.swing.JCheckBox;
 import javax.swing.JTextField;
 
 import contracts.IRegisterProfessorController;
+import model.Professor;
 import service.FileService;
 
 public class RegisterProfessorController implements ActionListener, IRegisterProfessorController {
@@ -14,7 +15,7 @@ public class RegisterProfessorController implements ActionListener, IRegisterPro
 	// Configurações do arquivo
 	private final String fileName = "Professors";
 	private FileService service;
-	private final String formatLine = "%s;%s\r\n";
+
 
 	// Campos que serão guardados
 
@@ -26,6 +27,7 @@ public class RegisterProfessorController implements ActionListener, IRegisterPro
 		this.name = name;
 	}
 
+	@SuppressWarnings("unused")
 	private boolean validate(String[] data) {
 		return true;
 	}
@@ -44,16 +46,9 @@ public class RegisterProfessorController implements ActionListener, IRegisterPro
 			}
 		}
 		
-		String[] data = new String[2];
-
-		data[0] = name;
-		data[1] = areasString.toString();
+		Professor professor = new Professor(name, areasString.toString());
 		
-		if (!this.validate(data)) {
-			return;
-		}
-		
-		String dataToFile = String.format(formatLine, data[0], data[1]);
+		String dataToFile = professor.toString();
 		try {
 			this.service.run(this.fileName, dataToFile);
 		} catch (Exception e) {
