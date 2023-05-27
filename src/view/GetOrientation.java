@@ -5,17 +5,25 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import controller.GetOrientationController;
+import controller.InsertOrientationController;
+
 import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.JTextField;
+import javax.swing.UIManager;
+import javax.swing.JTextPane;
+import javax.swing.JButton;
 
 public class GetOrientation extends JFrame {
 
 	private JPanel contentPane;
-	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_2;
-	private JTextField textField_3;
+	private JTextField groupCode;
+	private GetOrientationController controller;
+	private JLabel lblOriTitle;
+	private JTextPane textDesc;
+	private JTextPane textStatus;
 
 	/**
 	 * Launch the application.
@@ -37,8 +45,10 @@ public class GetOrientation extends JFrame {
 	 * Create the frame.
 	 */
 	public GetOrientation() {
+		this.controller = new GetOrientationController(lblOriTitle, groupCode, textDesc, textStatus);
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 450, 349);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -46,50 +56,59 @@ public class GetOrientation extends JFrame {
 		contentPane.setLayout(null);
 		
 		JPanel panel = new JPanel();
-		panel.setBounds(10, 11, 414, 239);
+		panel.setBounds(10, 11, 414, 288);
 		contentPane.add(panel);
 		panel.setLayout(null);
 		
-		JLabel lblNewLabel = new JLabel("Ver orientação");
-		lblNewLabel.setFont(new Font("Arial", Font.BOLD, 18));
-		lblNewLabel.setBounds(10, 11, 136, 22);
+		JLabel lblNewLabel = new JLabel("Grupo");
+		lblNewLabel.setFont(UIManager.getFont("Label.font"));
+		lblNewLabel.setBounds(272, 261, 35, 22);
 		panel.add(lblNewLabel);
 		
-		JLabel lblNewLabel_1 = new JLabel("Data");
-		lblNewLabel_1.setBounds(10, 44, 46, 14);
-		panel.add(lblNewLabel_1);
-		
-		JLabel lblNewLabel_1_1 = new JLabel("Título");
-		lblNewLabel_1_1.setBounds(10, 69, 46, 14);
-		panel.add(lblNewLabel_1_1);
+		JLabel lblOriTitle = new JLabel("Título");
+		lblOriTitle.setFont(new Font("Arial", Font.BOLD, 14));
+		lblOriTitle.setBounds(12, 11, 394, 22);
+		panel.add(lblOriTitle);
+		this.controller.setOriTitle(lblOriTitle);
 		
 		JLabel lblNewLabel_2 = new JLabel("Estado");
-		lblNewLabel_2.setBounds(10, 94, 46, 14);
+		lblNewLabel_2.setBounds(12, 159, 387, 14);
 		panel.add(lblNewLabel_2);
 		
 		JLabel lblNewLabel_3 = new JLabel("Descrição");
-		lblNewLabel_3.setBounds(10, 119, 46, 14);
+		lblNewLabel_3.setBounds(12, 44, 387, 14);
 		panel.add(lblNewLabel_3);
 		
-		textField = new JTextField();
-		textField.setBounds(60, 44, 86, 20);
-		panel.add(textField);
-		textField.setColumns(10);
+		groupCode = new JTextField();
+		groupCode.setText("");
+		groupCode.setEditable(false);
+		groupCode.setBounds(312, 262, 86, 20);
+		panel.add(groupCode);
+		groupCode.setColumns(10);
+		this.controller.setGroupCode(groupCode);
 		
-		textField_1 = new JTextField();
-		textField_1.setColumns(10);
-		textField_1.setBounds(60, 66, 86, 20);
-		panel.add(textField_1);
+		JTextPane textDesc = new JTextPane();
+		textDesc.setEditable(false);
+		textDesc.setBounds(12, 69, 385, 80);
+		panel.add(textDesc);
+		this.controller.setTextDesc(textDesc);
 		
-		textField_2 = new JTextField();
-		textField_2.setColumns(10);
-		textField_2.setBounds(60, 91, 86, 20);
-		panel.add(textField_2);
+		JTextPane textStatus = new JTextPane();
+		textStatus.setEditable(false);
+		textStatus.setBounds(12, 179, 385, 17);
+		panel.add(textStatus);
+		this.controller.setTextStatus(textStatus);
 		
-		textField_3 = new JTextField();
-		textField_3.setColumns(10);
-		textField_3.setBounds(60, 116, 86, 20);
-		panel.add(textField_3);
+		JButton btnSetAsDone = new JButton("Marcar como Concluído");
+		btnSetAsDone.setBounds(12, 206, 220, 23);
+		panel.add(btnSetAsDone);
+		btnSetAsDone.addActionListener(this.controller);
+		
+		JButton btnSetAsUncompleted = new JButton("Marcar como Em Andamento");
+		btnSetAsUncompleted.setBounds(12, 235, 220, 23);
+		panel.add(btnSetAsUncompleted);
+		btnSetAsDone.addActionListener(this.controller);
+		
+		this.controller.loadOrientation();
 	}
-
 }

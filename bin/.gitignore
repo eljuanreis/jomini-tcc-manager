@@ -1,6 +1,4 @@
 /controller/
-/view/
-/constants/
 /model/
 /service/
-/components/
+/view/

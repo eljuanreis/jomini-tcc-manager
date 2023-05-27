@@ -41,8 +41,8 @@ import javax.swing.ListSelectionModel;
 
 public class InsertOrientation extends JFrame {
 	private InsertOrientationController controller;
-	private JTextField textField;
-	private JTextField textField_1;
+	private JTextField inputTitle;
+	private JTextField inputDesc;
 	private JTable table;
 
 	/**
@@ -68,7 +68,7 @@ public class InsertOrientation extends JFrame {
 	 * @throws InterruptedException 
 	 */
 	public InsertOrientation() throws InterruptedException {
-		this.controller = new InsertOrientationController();
+		this.controller = new InsertOrientationController(inputTitle, inputDesc);
 		setTitle("Orientações - Trabalho de ED");
 		setResizable(false);
 
@@ -124,13 +124,17 @@ public class InsertOrientation extends JFrame {
 		panel.add(panel_1_1);
 		panel_1_1.setLayout(new GridLayout(2, 2, 0, 20));
 		
-		textField = new JTextField();
-		textField.setColumns(10);
-		panel_1_1.add(textField);
+		inputTitle = new JTextField();
+		inputTitle.setColumns(10);
+		panel_1_1.add(inputTitle);
 		
-		textField_1 = new JTextField();
-		textField_1.setColumns(10);
-		panel_1_1.add(textField_1);
+		controller.setTitleField(inputTitle);
+		
+		inputDesc = new JTextField();
+		inputDesc.setColumns(10);
+		panel_1_1.add(inputDesc);
+		
+		controller.setDescField(inputDesc);
 		
 		JPanel panel_3 = new JPanel();
 		panel_3.setBounds(10, 11, 60, 71);
@@ -145,9 +149,10 @@ public class InsertOrientation extends JFrame {
 		lblNewLabel_2_2.setFont(new Font("Arial", Font.PLAIN, 12));
 		panel_3.add(lblNewLabel_2_2);
 		
-		JButton btnNewButton_1 = new JButton("Salvar");
-		btnNewButton_1.setBounds(242, 174, 182, 29);
-		panel.add(btnNewButton_1);
+		JButton btnSalvarOrientacao = new JButton("Salvar");
+		btnSalvarOrientacao.setBounds(242, 174, 182, 29);
+		panel.add(btnSalvarOrientacao);
+		btnSalvarOrientacao.addActionListener(this.controller);
 		
 		JLabel lblNewLabel_1 = new JLabel("Grupo:");
 		lblNewLabel_1.setBounds(10, 36, 46, 14);
