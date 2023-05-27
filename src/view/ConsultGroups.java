@@ -2,12 +2,12 @@ package view;
 
 import java.awt.EventQueue;
 
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import controller.ConsultGroupController;
-import controller.RegisterProfessorController;
 import threads.TimeThread;
 
 import javax.swing.JLabel;
@@ -16,22 +16,17 @@ import java.awt.Font;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 import javax.swing.JScrollPane;
-import javax.swing.JTextPane;
-import java.awt.GridLayout;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 import javax.swing.JTable;
-import java.awt.Color;
-import javax.swing.JScrollBar;
-import javax.swing.JEditorPane;
-import javax.swing.JTree;
 import javax.swing.table.DefaultTableModel;
 
 import constants.Configs;
 import javax.swing.JSeparator;
 import javax.swing.SwingConstants;
 
+@SuppressWarnings("serial")
 public class ConsultGroups extends JFrame {
 
 	private ConsultGroupController controller;
@@ -80,7 +75,7 @@ public class ConsultGroups extends JFrame {
 		lblNewLabel_2.setBounds(10, 59, 160, 14);
 		contentPane.add(lblNewLabel_2);
 		
-		JComboBox comboArea = new JComboBox(modelAreas);
+		JComboBox<String> comboArea = new JComboBox<String>(modelAreas);
 		comboArea.setBounds(10, 75, 260, 22);
 		comboArea.setName("Areas");
 		contentPane.add(comboArea);
@@ -112,7 +107,7 @@ public class ConsultGroups extends JFrame {
 		contentPane.add(softwareVersionLabel);
 
 		//controller
-		this.controller = new ConsultGroupController(this.modelAreas, this.modelTable);
+		this.controller = new ConsultGroupController(this.modelTable);
 
 		//listeners
 		comboArea.addActionListener(this.controller);
@@ -131,7 +126,7 @@ public class ConsultGroups extends JFrame {
 				}
 				
 				// Popula os grupos na tabela
-				controller.initListingTable(controller.loadGroups(""));
+				controller.initListingTable(controller.loadGroups("", true));
 
 			}
 		});

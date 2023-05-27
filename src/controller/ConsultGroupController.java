@@ -1,13 +1,11 @@
 package controller;
 
 import java.awt.event.ActionEvent;
+
 import java.awt.event.ActionListener;
 import java.io.IOException;
 
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
-import javax.swing.JOptionPane;
-import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 import br.edu.fateczl.ObjectList;
@@ -15,85 +13,87 @@ import model.Group;
 import service.FileService;
 
 public class ConsultGroupController implements ActionListener {
-	
+
 	private FileService service;
-	private DefaultComboBoxModel<String> modelAreas;
 	private DefaultTableModel modelTable;
 	private static boolean tableStarted = false;
 	private ObjectList[] hashTable = new ObjectList[constants.Configs.areas.length];
-	
-	public ConsultGroupController(DefaultComboBoxModel<String> modelAreas, DefaultTableModel modelTable) {
+
+	public ConsultGroupController(DefaultTableModel modelTable) {
 		this.service = new FileService();
 
-		this.modelAreas = modelAreas;
 		this.modelTable = modelTable;
 	}
 
+	@SuppressWarnings("unused")
 	private boolean validate(String[] data) {
 		return true;
 	}
-	
-	private void loadHashTable() {
-		try {
-            String groupsData = service.readData("Groups");
-            String[] GroupsByLine = groupsData.split("\\r\\n");
-            String line[];
-            
-            int tableLenght = hashTable.length;
-            for (int i = 0; i < tableLenght; i++) {
-                hashTable[i] = new ObjectList();
-            }
-            
-            int groupsSize = GroupsByLine.length;
-            Group g;
-            ObjectList l, lAux;
-            int hashCode;
-            String code, professor, area, tema, students;
-            for (int i = 0; i < groupsSize; i++) {
-                l = new ObjectList();
-                code		= GroupsByLine[i].split(";")[0];
-                professor	= GroupsByLine[i].split(";")[1];
-                area		= GroupsByLine[i].split(";")[2];
-                tema		= GroupsByLine[i].split(";")[3];
-                students	= GroupsByLine[i].split(";")[4];
-                g = new Group(code, professor, area, tema, students);
-                
-                hashCode = Integer.parseInt(String.valueOf(code.charAt(0)));
-                
-                try {
-                    l = (ObjectList) hashTable[hashCode];
-                    l.addLast(g);
-                    hashTable[hashCode] = l;
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-	}
 
-	private void save() {
-//		String professor = (String) this.modelProfessors.getSelectedItem();
-//		String tema = this.tema.getText();
-//		String area = (String) this.modelAreas.getSelectedItem();
-//
-//		int alunosSize = this.modelList.getSize();
-//
-//		StringBuffer alunos = new StringBuffer();
-//		for (int i = 0; i < alunosSize; i++) {
-//			String aluno = this.modelList.getElementAt(i);
-//
-//			alunos.append(aluno);
-//		}
-//		
-//		Group group = new Group(professor, tema, area, alunos.toString());
-//		
-//		try {
-//			this.service.run(this.fileName, group.toString());
-//		} catch (Exception e) {
-//			System.out.println(e.getMessage());
-//		}
+	/**
+	 * Carrega a tabela de espalhamento basedo no arquivo Groups.
+	 * 
+	 * @param supressWarning
+	 */
+	private boolean loadHashTable(boolean supressWarning) {
+		try {
+			// Lê o arquivo e faz o split (existem duas chamadas a este método no contexto,
+			// por isso uma é suprimida as mensagens de erro
+			this.service.setSupressedWarning(supressWarning);
+			String groupsData = this.service.readData("Groups");
+			this.service.setSupressedWarning(false);
+
+			String[] groupsByLine = groupsData.split("\\r\\n");
+
+			// A tabela estará dividada por áreas
+			int tableLenght = this.hashTable.length;
+			for (int i = 0; i < tableLenght; i++) {
+				this.hashTable[i] = new ObjectList();
+			}
+
+			int groupsSize = groupsByLine.length;
+
+			// Lê o arquivo e retorna a tabela de espalhamento populada
+			for (int i = 0; i < groupsSize; i++) {
+				ObjectList list = new ObjectList();
+				String code = groupsByLine[i].split(";")[0];
+				String professor = groupsByLine[i].split(";")[1];
+				String area = groupsByLine[i].split(";")[2];
+				String tema = groupsByLine[i].split(";")[3];
+				String students = groupsByLine[i].split(";")[4];
+				Group g = new Group(code, professor, area, tema, students);
+
+				Object hashCode = null;
+
+				// Teste para ver se hashcode é valido
+				try {
+					hashCode = (int) Integer.parseInt(String.valueOf(code.charAt(0)));
+				} catch (Exception e) {
+					System.out.println(e.getMessage());
+				}
+
+				// Caso seja, executa o resto
+				if (hashCode != null) {
+					int hashInteger = (int) hashCode;
+
+					try {
+						list = (ObjectList) hashTable[hashInteger];
+						list.addLast(g);
+						hashTable[hashInteger] = list;
+					} catch (Exception e) {
+						e.printStackTrace();
+						return false;
+					}
+				}
+
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+			return false;
+		}
+
+		return true;
+
 	}
 
 	@Override
@@ -101,24 +101,22 @@ public class ConsultGroupController implements ActionListener {
 		String cmd = e.getActionCommand();
 
 		if (cmd.contains("comboBoxChanged")) {
+			@SuppressWarnings("rawtypes")
 			JComboBox j = (JComboBox) e.getSource();
 			if (j.getName() == "Areas") {
-				String[] data = loadGroups((String) j.getSelectedItem());
-				
+				String[] data = loadGroups((String) j.getSelectedItem(), false);
+
 				this.initListingTable(data);
 			}
 		}
 	}
-	
-	public String[] loadGroups(String filter) {
-		loadHashTable();
-		
-		String fileName = "Groups";
-		System.out.println(filter);
-		
+
+	public String[] loadGroups(String filter, boolean supressWarning) {
+		loadHashTable(supressWarning);
+
 		if (filter.trim().length() > 0) {
 			int hashCode = Integer.parseInt(String.valueOf(filter.charAt(0)));
-			ObjectList l = (ObjectList) hashTable[hashCode];
+			ObjectList l = (ObjectList) this.hashTable[hashCode];
 			int lSize = l.size();
 			Group g;
 			String[] groups = new String[lSize];
@@ -130,74 +128,38 @@ public class ConsultGroupController implements ActionListener {
 					e.printStackTrace();
 				}
 			}
-			
+
 			return groups;
-		} else {
-			
-			return null;
 		}
-		/*
-		try {
-			String data = this.service.readData(fileName);
 
-			String[] allData = data.split("\r\n");
-
-			if (filter.trim().length() > 0) {
-				int length = allData.length;
-
-				StringBuffer dataFiltred = new StringBuffer();
-
-				for (int i = 0; i < length; i++) {
-					if (allData[i].contains(filter)) {
-						dataFiltred.append(allData[i]);
-					}
-				}
-
-				if (dataFiltred.toString().length() == 0) {
-					JOptionPane.showMessageDialog(null, "Nenhum grupo encontrado com esse filtro");
-					
-					return null;
-				}
-
-				return dataFiltred.toString().split("\r\n");
-			}
-
-			return allData;
-		} catch (IOException e) {
-			JOptionPane.showMessageDialog(null, "Não existem grupos cadastrados");
-			e.printStackTrace();
-
-			return null;
-		}
-		*/
+		return null;
 	}
-	
+
 	/**
 	 * Responsável por popular a tabela com dados
 	 */
 	public void initListingTable(String[] data) {
-		
+
 		if (!tableStarted) {
 			this.modelTable.addColumn("Código");
 			this.modelTable.addColumn("Tema");
-			
+
 			tableStarted = true;
 		}
-		
+
 		this.modelTable.setRowCount(0);
-		
+
 		if (data != null) {
 
 			for (String row : data) {
-		
+
 				System.out.println(row);
 				String[] splitRow = row.split(";");
-	
+
 				String[] rowTable = new String[2];
 
 				rowTable[0] = splitRow[0];
 				rowTable[1] = splitRow[1];
-				
 
 				this.modelTable.addRow(rowTable);
 			}
