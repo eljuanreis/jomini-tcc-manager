@@ -109,7 +109,9 @@ public class SearchGroup extends JFrame {
 		lblSearch.setFont(UIManager.getFont("Button.font"));
 		
 		JComboBox comboBox = new JComboBox(comboBoxList);
+		comboBox.setName("groupId");
 		comboBox.setBounds(145, 25, 237, 22);
+		comboBox.addActionListener(this.controller);
 		panel.add(comboBox);
 		
 		JLabel lblNewLabel = new JLabel("Grupos encontrados");

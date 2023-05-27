@@ -6,9 +6,10 @@ import java.awt.event.ActionListener;
 import javax.swing.JCheckBox;
 import javax.swing.JTextField;
 
+import contracts.IRegisterProfessorController;
 import service.FileService;
 
-public class RegisterProfessorController implements ActionListener {
+public class RegisterProfessorController implements ActionListener, IRegisterProfessorController {
 
 	// Configurações do arquivo
 	private final String fileName = "Professors";

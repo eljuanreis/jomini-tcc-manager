@@ -6,23 +6,27 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 
 import javax.swing.JComboBox;
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 import br.edu.fateczl.ObjectList;
+import contracts.IConsultGroupController;
 import model.Group;
 import service.FileService;
 
-public class ConsultGroupController implements ActionListener {
+public class ConsultGroupController implements ActionListener, IConsultGroupController {
 
 	private FileService service;
+	private JTable table;
 	private DefaultTableModel modelTable;
 	private static boolean tableStarted = false;
 	private ObjectList[] hashTable = new ObjectList[constants.Configs.areas.length];
 
-	public ConsultGroupController(DefaultTableModel modelTable) {
+	public ConsultGroupController(DefaultTableModel modelTable, JTable table) {
 		this.service = new FileService();
 
 		this.modelTable = modelTable;
+		this.table = table;
 	}
 
 	@SuppressWarnings("unused")
@@ -143,6 +147,9 @@ public class ConsultGroupController implements ActionListener {
 		if (!tableStarted) {
 			this.modelTable.addColumn("Código");
 			this.modelTable.addColumn("Tema");
+			this.modelTable.addColumn(" ");
+			
+			this.addTableOnClick();
 
 			tableStarted = true;
 		}
@@ -153,16 +160,34 @@ public class ConsultGroupController implements ActionListener {
 
 			for (String row : data) {
 
-				System.out.println(row);
 				String[] splitRow = row.split(";");
 
-				String[] rowTable = new String[2];
+				String[] rowTable = new String[3];
 
 				rowTable[0] = splitRow[0];
 				rowTable[1] = splitRow[1];
+				rowTable[2] = "Visualizar";
 
 				this.modelTable.addRow(rowTable);
 			}
 		}
 	}
+	
+	/**
+	 * EventListener de clique na tabela
+	 */
+	private void addTableOnClick() {
+		this.table.addMouseListener(new java.awt.event.MouseAdapter() {
+		    @Override
+		    public void mouseClicked(java.awt.event.MouseEvent evt) {
+		        int row = table.rowAtPoint(evt.getPoint());
+		        int col = table.columnAtPoint(evt.getPoint());
+		        if (row >= 0 && col >= 0 && col == 2) {
+		        	System.out.println(table.getValueAt(row, 0));
+		        }
+		    }
+		});
+	}
+	
+	
 }

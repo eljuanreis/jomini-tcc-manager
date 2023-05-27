@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
@@ -13,8 +14,9 @@ import service.FileService;
 import model.Group;
 
 import br.edu.fateczl.ObjectList;
+import contracts.ISearchGroupController;
 
-public class SearchGroupController implements ActionListener {
+public class SearchGroupController implements ActionListener, ISearchGroupController {
 
 	private DefaultComboBoxModel<String> comboBoxList;
 	private JTextField searchBox;
@@ -120,6 +122,25 @@ public class SearchGroupController implements ActionListener {
 		if (cmd.contains("Pesquisar")) {
 			this.searchGroup();
 		}
+		
+		if (cmd.contains("comboBoxChanged")) {
+			@SuppressWarnings("unchecked")
+			JComboBox<String> group = (JComboBox<String>) e.getSource();
+			if (group.getName() == "groupId") {
+				this.groupOrientations(group);
+			}
+		}
+		
+	}
+	
+	private void groupOrientations(JComboBox<String> combo) {
+		String groupId = (String) combo.getSelectedItem();
+		
+		if (groupId.trim().length() == 0) {
+			return;
+		}
+		System.out.println(groupId);
+		
 		
 	}
 

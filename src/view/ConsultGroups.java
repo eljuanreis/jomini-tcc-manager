@@ -122,7 +122,7 @@ public class ConsultGroups extends JFrame {
 		contentPane.add(btnNewButton);
 
 		//controller
-		this.controller = new ConsultGroupController(this.modelTable);
+		this.controller = new ConsultGroupController(this.modelTable, table);
 
 		//listeners
 		comboArea.addActionListener(this.controller);

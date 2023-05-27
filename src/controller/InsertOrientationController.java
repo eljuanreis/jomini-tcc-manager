@@ -2,7 +2,9 @@ package controller;
 
 import javax.swing.JTable;
 
-public class InsertOrientationController {
+import contracts.IInsertOrientationController;
+
+public class InsertOrientationController implements IInsertOrientationController {
 
 	public JTable initListingTable() {
 		// Data to be displayed in the JTable
