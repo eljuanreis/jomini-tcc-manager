@@ -46,7 +46,7 @@ public class GroupController implements ActionListener  {
 		String professor = (String) this.modelProfessors.getSelectedItem();
 		String tema = this.tema.getText();
 		String area = ((String) this.modelAreas.getSelectedItem()).split(" ")[0];
-		// [área][4 números aleatórios][ra do primeiro integrante]
+		// [área][3 números aleatórios][ra do primeiro integrante]
 		String code = area.split(" ")[0];
 		int rngNum = (int) (Math.random()*1000);
 		code = code + String.valueOf(rngNum);

@@ -10,6 +10,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
+import br.edu.fateczl.ObjectList;
 import model.Group;
 import service.FileService;
 
@@ -19,6 +20,7 @@ public class ConsultGroupController implements ActionListener {
 	private DefaultComboBoxModel<String> modelAreas;
 	private DefaultTableModel modelTable;
 	private static boolean tableStarted = false;
+	private ObjectList[] hashTable = new ObjectList[constants.Configs.areas.length];
 	
 	public ConsultGroupController(DefaultComboBoxModel<String> modelAreas, DefaultTableModel modelTable) {
 		this.service = new FileService();
@@ -29,6 +31,46 @@ public class ConsultGroupController implements ActionListener {
 
 	private boolean validate(String[] data) {
 		return true;
+	}
+	
+	private void loadHashTable() {
+		try {
+            String groupsData = service.readData("Groups");
+            String[] GroupsByLine = groupsData.split("\\r\\n");
+            String line[];
+            
+            int tableLenght = hashTable.length;
+            for (int i = 0; i < tableLenght; i++) {
+                hashTable[i] = new ObjectList();
+            }
+            
+            int groupsSize = GroupsByLine.length;
+            Group g;
+            ObjectList l, lAux;
+            int hashCode;
+            String code, professor, area, tema, students;
+            for (int i = 0; i < groupsSize; i++) {
+                l = new ObjectList();
+                code		= GroupsByLine[i].split(";")[0];
+                professor	= GroupsByLine[i].split(";")[1];
+                area		= GroupsByLine[i].split(";")[2];
+                tema		= GroupsByLine[i].split(";")[3];
+                students	= GroupsByLine[i].split(";")[4];
+                g = new Group(code, professor, area, tema, students);
+                
+                hashCode = Integer.parseInt(String.valueOf(code.charAt(0)));
+                
+                try {
+                    l = (ObjectList) hashTable[hashCode];
+                    l.addLast(g);
+                    hashTable[hashCode] = l;
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 	}
 
 	private void save() {
@@ -69,9 +111,32 @@ public class ConsultGroupController implements ActionListener {
 	}
 	
 	public String[] loadGroups(String filter) {
+		loadHashTable();
+		
 		String fileName = "Groups";
 		System.out.println(filter);
-
+		
+		if (filter.trim().length() > 0) {
+			int hashCode = Integer.parseInt(String.valueOf(filter.charAt(0)));
+			ObjectList l = (ObjectList) hashTable[hashCode];
+			int lSize = l.size();
+			Group g;
+			String[] groups = new String[lSize];
+			for (int i = 0; i < lSize; i++) {
+				try {
+					g = (Group) l.get(i);
+					groups[i] = g.toString();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			
+			return groups;
+		} else {
+			
+			return null;
+		}
+		/*
 		try {
 			String data = this.service.readData(fileName);
 
@@ -104,6 +169,7 @@ public class ConsultGroupController implements ActionListener {
 
 			return null;
 		}
+		*/
 	}
 	
 	/**

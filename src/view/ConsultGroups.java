@@ -123,9 +123,11 @@ public class ConsultGroups extends JFrame {
 				String[] areas = Configs.areas;
 
 				modelAreas.addElement(" ");
-
+				
+				int i = 0;
 				for (String element : areas) {
-					modelAreas.addElement(element);
+					modelAreas.addElement(i + " - " + element);
+					i++;
 				}
 				
 				// Popula os grupos na tabela
