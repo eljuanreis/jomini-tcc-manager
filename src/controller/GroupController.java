@@ -38,6 +38,7 @@ public class GroupController implements ActionListener  {
 		this.modelAreas = modelAreas;
 	}
 
+	@SuppressWarnings("unused")
 	private boolean validate(String[] data) {
 		return true;
 	}
@@ -71,7 +72,6 @@ public class GroupController implements ActionListener  {
 		
 		try {
 			this.service.run(this.fileName, group.toString());
-			JOptionPane.showMessageDialog(null, "O grupo foi gravado com êxito");
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
@@ -81,7 +81,7 @@ public class GroupController implements ActionListener  {
 	public void actionPerformed(ActionEvent e) {
 		String cmd = e.getActionCommand();
 
-		if (cmd.contains("Criar")) {
+		if (cmd.contains("Salvar")) {
 			this.save();
 		}
 
@@ -94,7 +94,8 @@ public class GroupController implements ActionListener  {
 		}
 
 		if (cmd.contains("comboBoxChanged")) {
-			JComboBox area = (JComboBox) e.getSource();
+			@SuppressWarnings("unchecked")
+			JComboBox<String> area = (JComboBox<String>) e.getSource();
 			if (area.getName() == "Areas") {
 				this.loadProfessorArea(area);
 			}
@@ -162,7 +163,6 @@ public class GroupController implements ActionListener  {
 
 			return allData;
 		} catch (IOException e) {
-			JOptionPane.showMessageDialog(null, "Não existem alunos cadastrados");
 			e.printStackTrace();
 
 			return new String[0];
@@ -197,7 +197,7 @@ public class GroupController implements ActionListener  {
 		this.modelList.remove(position);
 	}
 
-	private void loadProfessorArea(JComboBox combo) {
+	private void loadProfessorArea(JComboBox<String> combo) {
 		String area = (String) combo.getSelectedItem();
 
 		if (area.length() <= 1) {

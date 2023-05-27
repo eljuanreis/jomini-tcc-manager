@@ -2,12 +2,12 @@ package view;
 
 import java.awt.EventQueue;
 
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import controller.StudentController;
 import service.ValidateField;
-import threads.TimeThread;
 
 import java.awt.GridLayout;
 import javax.swing.JLabel;
@@ -16,14 +16,15 @@ import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.SwingConstants;
 
+import components.ActualDate;
+import components.SaveButton;
 import constants.Configs;
 
 import javax.swing.JSeparator;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
+@SuppressWarnings("serial")
 public class RegisterStudent extends JFrame {
 	private JTextField nomeAluno;
 	private JTextField raAluno;
@@ -110,7 +111,7 @@ public class RegisterStudent extends JFrame {
 		
 		this.controller = new StudentController(this.nomeAluno, this.raAluno);
 		
-		JButton btnNewButton_1 = new JButton("Salvar");
+		JButton btnNewButton_1 = new SaveButton("Aluno", "salvo");
 		btnNewButton_1.addActionListener(this.controller);
 		panel_2.add(btnNewButton_1);
 		
@@ -118,14 +119,11 @@ public class RegisterStudent extends JFrame {
 		separator.setBounds(10, 235, 414, 15);
 		getContentPane().add(separator);
 		
-		JLabel labelDate = new JLabel("....");
+		JLabel labelDate = new ActualDate("....");
 		labelDate.setHorizontalTextPosition(SwingConstants.LEFT);
 		labelDate.setHorizontalAlignment(SwingConstants.RIGHT);
 		labelDate.setBounds(242, 236, 182, 14);
 		getContentPane().add(labelDate);
-	
-		TimeThread timeThread = new TimeThread(labelDate);
-		timeThread.start();
 
 		JLabel softwareVersionLabel = new JLabel(Configs.version);
 		softwareVersionLabel.setBounds(10, 236, 46, 14);

@@ -6,12 +6,13 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import components.ActualDate;
+import components.SaveButton;
 import constants.Configs;
 
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
-import javax.swing.JTextPane;
 import javax.swing.JButton;
 
 import java.awt.event.WindowAdapter;
@@ -19,22 +20,17 @@ import java.awt.event.WindowEvent;
 import java.awt.Font;
 
 import controller.GroupController;
-import controller.RegisterProfessorController;
-import threads.TimeThread;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JScrollPane;
 import javax.swing.JList;
-import javax.swing.AbstractListModel;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 import javax.swing.JSeparator;
 import javax.swing.SwingConstants;
-import java.awt.SystemColor;
 
+@SuppressWarnings("serial")
 public class CreateGroup extends JFrame {
 
 	private GroupController controller;
@@ -87,7 +83,7 @@ public class CreateGroup extends JFrame {
 		tema.setBounds(10, 325, 441, 20);
 		contentPane.add(tema);
 
-		JComboBox areas = new JComboBox(modelAreas);
+		JComboBox<String> areas = new JComboBox<String>(modelAreas);
 		areas.setBounds(10, 277, 200, 22);
 		contentPane.add(areas);
 
@@ -99,11 +95,11 @@ public class CreateGroup extends JFrame {
 		lblNewLabel_2_1.setBounds(251, 263, 160, 14);
 		contentPane.add(lblNewLabel_2_1);
 
-		JComboBox comboBox_1 = new JComboBox(modelProfessors);
+		JComboBox<String> comboBox_1 = new JComboBox<String>(modelProfessors);
 		comboBox_1.setBounds(251, 277, 200, 22);
 		contentPane.add(comboBox_1);
 
-		JButton criarBtn = new JButton("Criar");
+		JButton criarBtn = new SaveButton("Grupo", "salvo");
 		criarBtn.setBounds(10, 356, 200, 23);
 		contentPane.add(criarBtn);
 
@@ -116,7 +112,7 @@ public class CreateGroup extends JFrame {
 		contentPane.add(panel);
 		panel.setLayout(null);
 
-		JComboBox listOfStudents = new JComboBox(modelCombox);
+		JComboBox<String> listOfStudents = new JComboBox<String>(modelCombox);
 		listOfStudents.setToolTipText("");
 		listOfStudents.setBounds(175, 20, 266, 25);
 		panel.add(listOfStudents);
@@ -159,7 +155,7 @@ public class CreateGroup extends JFrame {
 
 		areas.addActionListener(this.controller);
 		areas.setName("Areas");
-		
+
 		criarBtn.addActionListener(this.controller);
 
 		JButton btnAddStudent = new JButton("Adicionar");
@@ -169,7 +165,6 @@ public class CreateGroup extends JFrame {
 
 		JButton btnPesquisar = new JButton("Pesquisar");
 		btnPesquisar.addActionListener(this.controller);
-		
 
 		btnPesquisar.setBounds(10, 49, 155, 24);
 		panel.add(btnPesquisar);
@@ -177,24 +172,21 @@ public class CreateGroup extends JFrame {
 		JLabel lblNewLabel_1_1 = new JLabel("Nome - RA");
 		lblNewLabel_1_1.setBounds(175, 0, 92, 14);
 		panel.add(lblNewLabel_1_1);
-		
+
 		JLabel lblNewLabel_5 = new JLabel("Tema");
 		lblNewLabel_5.setBounds(10, 307, 46, 14);
 		contentPane.add(lblNewLabel_5);
-		
+
 		JSeparator separator = new JSeparator();
 		separator.setBounds(10, 383, 441, 8);
 		contentPane.add(separator);
-		
-		JLabel labelDate = new JLabel("....");
+
+		JLabel labelDate = new ActualDate("....");
 		labelDate.setHorizontalTextPosition(SwingConstants.LEFT);
 		labelDate.setHorizontalAlignment(SwingConstants.RIGHT);
 		labelDate.setBounds(269, 385, 182, 14);
 		contentPane.add(labelDate);
-		
-		TimeThread timeThread = new TimeThread(labelDate);
-		timeThread.start();
-		
+
 		JLabel softwareVersionLabel = new JLabel(Configs.version);
 		softwareVersionLabel.setBounds(10, 385, 46, 14);
 		contentPane.add(softwareVersionLabel);
