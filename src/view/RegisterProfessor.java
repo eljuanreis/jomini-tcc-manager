@@ -9,6 +9,7 @@ import javax.swing.border.EmptyBorder;
 
 import components.SaveButton;
 import constants.Configs;
+import controller.IndexController;
 import controller.RegisterProfessorController;
 
 import javax.swing.JLabel;
@@ -21,6 +22,8 @@ import java.awt.Font;
 import javax.swing.JSeparator;
 import components.ActualDate;
 import javax.swing.SwingConstants;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 @SuppressWarnings("serial")
 public class RegisterProfessor extends JFrame {
@@ -37,7 +40,6 @@ public class RegisterProfessor extends JFrame {
 			public void run() {
 				try {
 					RegisterProfessor frame = new RegisterProfessor();
-					frame.setLocationRelativeTo(null);
 
 					frame.setVisible(true);
 				} catch (Exception e) {
@@ -55,7 +57,9 @@ public class RegisterProfessor extends JFrame {
 		setResizable(false);
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 348, 411);
+		setBounds(100, 100, 397, 411);
+		this.setLocationRelativeTo(null);
+
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -73,11 +77,11 @@ public class RegisterProfessor extends JFrame {
 
 		textField = new JTextField();
 		textField.setColumns(10);
-		textField.setBounds(22, 79, 284, 20);
+		textField.setBounds(22, 79, 349, 20);
 		contentPane.add(textField);
 
 		JPanel panelAreas = new JPanel();
-		panelAreas.setBounds(22, 137, 284, 146);
+		panelAreas.setBounds(22, 137, 349, 146);
 		contentPane.add(panelAreas);
 		panelAreas.setLayout(null);
 		
@@ -107,7 +111,7 @@ public class RegisterProfessor extends JFrame {
 
 		JButton btnNewButton = new SaveButton("Professor", "salvo");
 		btnNewButton.addActionListener(this.controller);
-		btnNewButton.setBounds(22, 294, 284, 23);
+		btnNewButton.setBounds(23, 312, 159, 23);
 		contentPane.add(btnNewButton);
 		
 		JLabel lblNewLabel_2 = new JLabel("Áreas");
@@ -115,17 +119,30 @@ public class RegisterProfessor extends JFrame {
 		contentPane.add(lblNewLabel_2);
 		
 		JSeparator separator = new JSeparator();
-		separator.setBounds(22, 346, 296, 15);
+		separator.setBounds(10, 346, 371, 2);
 		contentPane.add(separator);
 		
 		ActualDate labelDate = new ActualDate("....");
 		labelDate.setHorizontalTextPosition(SwingConstants.LEFT);
 		labelDate.setHorizontalAlignment(SwingConstants.RIGHT);
-		labelDate.setBounds(135, 347, 182, 14);
+		labelDate.setBounds(189, 346, 182, 14);
 		contentPane.add(labelDate);
 		
 		JLabel softwareVersionLabel = new JLabel(Configs.version);
 		softwareVersionLabel.setBounds(22, 347, 46, 14);
 		contentPane.add(softwareVersionLabel);
+		
+		JButton svbtnVoltarParaTela = new JButton("Voltar para tela principal");
+		JFrame telaAtual = (JFrame) this;
+
+		svbtnVoltarParaTela.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				IndexController.backToIndex(telaAtual);
+			}
+		});
+		svbtnVoltarParaTela.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		svbtnVoltarParaTela.setText("Voltar para tela principal");
+		svbtnVoltarParaTela.setBounds(212, 312, 159, 23);
+		contentPane.add(svbtnVoltarParaTela);
 	}
 }

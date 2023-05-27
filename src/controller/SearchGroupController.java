@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 import service.FileService;
@@ -82,7 +83,9 @@ public class SearchGroupController implements ActionListener {
 		for (int i = 0; i < groupsSize; i++) {
 			try {
 				g = (Group) groups.get(i);
-				if (g.getCode().substring(0, code.length()).contains(code)) {
+				int codeLength = code.length();
+				
+				if (codeLength == 0 || g.getCode().substring(0, codeLength).contains(code)) {
 					groupsByCode.addLast(g);
 				}
 			} catch (Exception e) {
@@ -90,8 +93,16 @@ public class SearchGroupController implements ActionListener {
 			}
 		}
 		
-		int lSize = groupsByCode.size();
 		comboBoxList.removeAllElements();
+
+		int lSize = groupsByCode.size();
+		
+		if (lSize == 0) {
+			JOptionPane.showMessageDialog(null, "Nenhum grupo encontrado com esse ID");
+			return;
+		}
+		
+		comboBoxList.addElement(" ");
 		for (int i = 0; i < lSize; i++) {
 			try {
 				g = (Group) groupsByCode.get(i);

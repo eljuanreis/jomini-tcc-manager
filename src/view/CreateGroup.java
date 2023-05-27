@@ -20,6 +20,7 @@ import java.awt.event.WindowEvent;
 import java.awt.Font;
 
 import controller.GroupController;
+import controller.IndexController;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
@@ -29,6 +30,8 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.JSeparator;
 import javax.swing.SwingConstants;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 @SuppressWarnings("serial")
 public class CreateGroup extends JFrame {
@@ -67,6 +70,8 @@ public class CreateGroup extends JFrame {
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 477, 449);
+		this.setLocationRelativeTo(null);
+		
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -190,6 +195,16 @@ public class CreateGroup extends JFrame {
 		JLabel softwareVersionLabel = new JLabel(Configs.version);
 		softwareVersionLabel.setBounds(10, 385, 46, 14);
 		contentPane.add(softwareVersionLabel);
+		
+		JButton back = new JButton("Voltar para a tela inicial");
+		JFrame tela = this;
+		back.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				IndexController.backToIndex(tela);
+			}
+		});
+		back.setBounds(251, 356, 200, 23);
+		contentPane.add(back);
 
 		addWindowListener(new WindowAdapter() {
 			@Override
