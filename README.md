@@ -1,7 +1,7 @@
 
 # Jomini TCC Manager
 
-This is a system to manage TCC's
+This is a system to manage TCC's. It has an academic purpose and therefore records the information in a csv file. Designed for data structure discipline
 
 # Technologies
 
