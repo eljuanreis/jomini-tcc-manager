@@ -30,7 +30,17 @@ public class FileService {
 
 		createFile(file, data);
 	}
+	
+	public Boolean fileExists(String fileName) {
+		File file = new File(makeFilePath(fileName));
 
+		if (file.exists() && file.isFile()) {
+			return true;
+		}
+		
+		return false;
+	}
+	
 	private String makeFilePath(String fileName) {
 		return String.format("%s" + "\\" + fileName + ".%s", Configs.dataDirectory, Configs.dataFileType);
 	}
