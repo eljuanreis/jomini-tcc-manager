@@ -1,8 +1,8 @@
 package controller;
 
 import java.awt.event.ActionEvent;
+
 import java.awt.event.ActionListener;
-import java.io.IOException;
 
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
@@ -11,8 +11,9 @@ import javax.swing.JTextField;
 import model.Orientation;
 import service.FileService;
 import br.edu.fateczl.ObjectStack;
+import contracts.IInsertOrientationController;
 
-public class InsertOrientationController implements ActionListener {
+public class InsertOrientationController implements ActionListener, IInsertOrientationController {
 
 	private FileService fileCtrl = new FileService();
 
@@ -43,7 +44,7 @@ public class InsertOrientationController implements ActionListener {
 	public void setDescField(JTextField descField) {
 		this.descField = descField;
 	}
-
+	
 	public JTable initListingTable() {
 		final String btnText = "Visualizar";
 		ObjectStack s = loadGroups();

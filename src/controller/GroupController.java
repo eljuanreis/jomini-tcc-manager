@@ -10,10 +10,11 @@ import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
+import contracts.IGroupController;
 import model.Group;
 import service.FileService;
 
-public class GroupController implements ActionListener  {
+public class GroupController implements ActionListener, IGroupController {
 	// Configurações do arquivo
 	private final String fileName = "Groups";
 	private FileService service;
@@ -49,7 +50,7 @@ public class GroupController implements ActionListener  {
 		String area = ((String) this.modelAreas.getSelectedItem()).split(" ")[0];
 		// [área][3 números aleatórios][ra do primeiro integrante]
 		String code = area.split(" ")[0];
-		int rngNum = (int) (Math.random()*1000);
+		int rngNum = (int) (Math.random() * 1000);
 		code = code + String.valueOf(rngNum);
 		System.out.println(code);
 
@@ -66,10 +67,9 @@ public class GroupController implements ActionListener  {
 		alunos.append("\"");
 		String raFirstStudent = alunos.toString().split("-")[1].replace("\"", "").split(",")[0];
 		code = code + raFirstStudent;
-		
-		
+
 		Group group = new Group(code, professor, tema, area, alunos.toString());
-		
+
 		try {
 			this.service.run(this.fileName, group.toString());
 		} catch (Exception e) {
@@ -114,7 +114,6 @@ public class GroupController implements ActionListener  {
 
 	private void addStudent() {
 		String student = (String) modelStudents.getSelectedItem();
-		
 
 		if (student.length() == 0) {
 			JOptionPane.showMessageDialog(null, "Selecione um elemento da lista");
@@ -205,7 +204,7 @@ public class GroupController implements ActionListener  {
 
 			return;
 		}
-		
+
 		area = area.split(" ")[0];
 
 		this.modelProfessors.removeAllElements();

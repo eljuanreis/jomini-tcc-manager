@@ -8,6 +8,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import controller.ConsultGroupController;
+import controller.IndexController;
 import threads.TimeThread;
 
 import javax.swing.JLabel;
@@ -25,6 +26,9 @@ import javax.swing.table.DefaultTableModel;
 import constants.Configs;
 import javax.swing.JSeparator;
 import javax.swing.SwingConstants;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 @SuppressWarnings("serial")
 public class ConsultGroups extends JFrame {
@@ -60,6 +64,7 @@ public class ConsultGroups extends JFrame {
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 500, 432);
+		this.setLocationRelativeTo(null);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -105,9 +110,19 @@ public class ConsultGroups extends JFrame {
 		JLabel softwareVersionLabel = new JLabel(Configs.version);
 		softwareVersionLabel.setBounds(10, 374, 46, 14);
 		contentPane.add(softwareVersionLabel);
+		
+		JButton btnNewButton = new JButton("Voltar para tela inicial");
+		JFrame tela = this;
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				IndexController.backToIndex(tela);
+			}
+		});
+		btnNewButton.setBounds(284, 75, 190, 23);
+		contentPane.add(btnNewButton);
 
 		//controller
-		this.controller = new ConsultGroupController(this.modelTable);
+		this.controller = new ConsultGroupController(this.modelTable, table);
 
 		//listeners
 		comboArea.addActionListener(this.controller);

@@ -6,8 +6,6 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import controller.InsertOrientationController;
-import controller.StudentController;
-import service.ValidateField;
 import threads.TimeThread;
 
 import java.awt.GridLayout;
@@ -20,25 +18,14 @@ import javax.swing.SwingConstants;
 import constants.Configs;
 
 import javax.swing.JSeparator;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import javax.swing.JTabbedPane;
+import javax.swing.JTable;
 import javax.swing.JScrollPane;
-import javax.swing.JSplitPane;
-import javax.swing.JDesktopPane;
-import java.awt.FlowLayout;
-import java.awt.BorderLayout;
+
 import java.awt.Cursor;
 
-import javax.swing.BoxLayout;
-import javax.swing.JTextPane;
-import javax.swing.JToolBar;
-import javax.swing.JTable;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.ListSelectionModel;
 
+@SuppressWarnings("serial")
 public class InsertOrientation extends JFrame {
 	private InsertOrientationController controller;
 	private JTextField inputTitle;

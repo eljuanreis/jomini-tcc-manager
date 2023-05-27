@@ -1,6 +1,7 @@
 package model;
 
 public class Orientation {
+
 	private String code;
 	private String title;
 	private String description;
@@ -27,7 +28,7 @@ public class Orientation {
 
 		return dataFile.toString();
 	}
-	
+
 	public String getCode() {
 		return code;
 	}
