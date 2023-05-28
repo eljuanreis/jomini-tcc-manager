@@ -74,7 +74,7 @@ public class ConsultGroupController implements ActionListener, IConsultGroupCont
 				try {
 					hashCode = (int) Integer.parseInt(String.valueOf(code.charAt(0)));
 				} catch (Exception e) {
-					System.out.println(e.getMessage());
+					e.getStackTrace();
 				}
 
 				// Caso seja, executa o resto
