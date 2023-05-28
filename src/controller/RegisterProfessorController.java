@@ -16,9 +16,7 @@ public class RegisterProfessorController implements ActionListener, IRegisterPro
 	private final String fileName = "Professors";
 	private FileService service;
 
-
 	// Campos que serão guardados
-
 	private JTextField name;
 	private int[] areasSelected = new int[6];
 
@@ -34,7 +32,7 @@ public class RegisterProfessorController implements ActionListener, IRegisterPro
 
 	private void save() {
 		String name = this.name.getText();
-		
+
 		StringBuffer areasString = new StringBuffer();
 
 		int length = areasSelected.length;
@@ -45,9 +43,9 @@ public class RegisterProfessorController implements ActionListener, IRegisterPro
 				areasString.append(area + ";");
 			}
 		}
-		
+
 		Professor professor = new Professor(name, areasString.toString());
-		
+
 		String dataToFile = professor.toString();
 		try {
 			this.service.run(this.fileName, dataToFile);
