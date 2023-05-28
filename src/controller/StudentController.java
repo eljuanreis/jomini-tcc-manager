@@ -1,14 +1,15 @@
 package controller;
 
 import java.awt.event.ActionEvent;
+
 import java.awt.event.ActionListener;
 
 import javax.swing.JTextField;
 
-import model.Student;
+import contracts.IStudentController;
 import service.FileService;
 
-public class StudentController implements ActionListener {
+public class StudentController implements ActionListener, IStudentController {
 
 	// Configurações do arquivo
 	private final String fileName = "Students";

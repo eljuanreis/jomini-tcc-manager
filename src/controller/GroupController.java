@@ -10,13 +10,14 @@ import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
+import contracts.IGroupController;
+import model.Group;
 import service.FileService;
 
-public class GroupController implements ActionListener {
+public class GroupController implements ActionListener, IGroupController {
 	// Configurações do arquivo
 	private final String fileName = "Groups";
 	private FileService service;
-	private final String formatLine = "%s;%s;%s;";
 
 	// Campos que serão guardados
 	private JTextField tema;
@@ -38,6 +39,7 @@ public class GroupController implements ActionListener {
 		this.modelAreas = modelAreas;
 	}
 
+	@SuppressWarnings("unused")
 	private boolean validate(String[] data) {
 		return true;
 	}
@@ -45,25 +47,31 @@ public class GroupController implements ActionListener {
 	private void save() {
 		String professor = (String) this.modelProfessors.getSelectedItem();
 		String tema = this.tema.getText();
-		String area = (String) this.modelAreas.getSelectedItem();
+		String area = ((String) this.modelAreas.getSelectedItem()).split(" ")[0];
+		// [área][3 números aleatórios][ra do primeiro integrante]
+		String code = area.split(" ")[0];
+		int rngNum = (int) (Math.random() * 1000);
+		code = code + String.valueOf(rngNum);
+		System.out.println(code);
 
-		int alunosSize = this.modelStudents.getSize();
+		int alunosSize = this.modelList.getSize();
+
 		StringBuffer alunos = new StringBuffer();
+		alunos.append("\"");
 		for (int i = 0; i < alunosSize; i++) {
-			String aluno = this.modelStudents.getElementAt(i);
+			String aluno = this.modelList.getElementAt(i);
 
-			alunos.append (aluno);
+			alunos.append(aluno + ",");
 		}
-		
-		StringBuffer dataFile = new StringBuffer();
-		
-		String fixedData = String.format(formatLine, professor, tema, area);
-		
-		dataFile.append(fixedData);
-		dataFile.append(alunos.toString());
-		
+		alunos.delete(alunos.length() - 1, alunos.length());
+		alunos.append("\"");
+		String raFirstStudent = alunos.toString().split("-")[1].replace("\"", "").split(",")[0];
+		code = code + raFirstStudent;
+
+		Group group = new Group(code, professor, tema, area, alunos.toString());
+
 		try {
-			this.service.run(this.fileName, dataFile.toString());
+			this.service.run(this.fileName, group.toString());
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
@@ -72,8 +80,8 @@ public class GroupController implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		String cmd = e.getActionCommand();
-		System.out.println(cmd);
-		if (cmd.contains("Criar")) {
+
+		if (cmd.contains("Salvar")) {
 			this.save();
 		}
 
@@ -86,9 +94,10 @@ public class GroupController implements ActionListener {
 		}
 
 		if (cmd.contains("comboBoxChanged")) {
-			JComboBox j = (JComboBox) e.getSource();
-			if (j.getName() == "Areas") {
-				this.loadProfessorArea(j);
+			@SuppressWarnings("unchecked")
+			JComboBox<String> area = (JComboBox<String>) e.getSource();
+			if (area.getName() == "Areas") {
+				this.loadProfessorArea(area);
 			}
 		}
 	}
@@ -105,7 +114,6 @@ public class GroupController implements ActionListener {
 
 	private void addStudent() {
 		String student = (String) modelStudents.getSelectedItem();
-		
 
 		if (student.length() == 0) {
 			JOptionPane.showMessageDialog(null, "Selecione um elemento da lista");
@@ -154,7 +162,6 @@ public class GroupController implements ActionListener {
 
 			return allData;
 		} catch (IOException e) {
-			JOptionPane.showMessageDialog(null, "Não existem alunos cadastrados");
 			e.printStackTrace();
 
 			return new String[0];
@@ -182,10 +189,14 @@ public class GroupController implements ActionListener {
 	}
 
 	public void removeStudent(int position) {
+		if (this.modelList.size() == 0) {
+			JOptionPane.showMessageDialog(null, "Não há o que remover");
+			return;
+		}
 		this.modelList.remove(position);
 	}
 
-	public void loadProfessorArea(JComboBox combo) {
+	private void loadProfessorArea(JComboBox<String> combo) {
 		String area = (String) combo.getSelectedItem();
 
 		if (area.length() <= 1) {
@@ -193,6 +204,8 @@ public class GroupController implements ActionListener {
 
 			return;
 		}
+
+		area = area.split(" ")[0];
 
 		this.modelProfessors.removeAllElements();
 
@@ -215,5 +228,4 @@ public class GroupController implements ActionListener {
 			e.printStackTrace();
 		}
 	}
-
 }

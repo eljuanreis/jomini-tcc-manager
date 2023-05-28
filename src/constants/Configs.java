@@ -4,7 +4,7 @@ public abstract class Configs {
 	/**
 	 * Informações sobre o software
 	 */
-	public static final String name = "Trabalho de ED";
+	public static final String name = "Jomini - TCC Manager";
 	public static final String version = "1.0.0";
 	
 	/**
@@ -12,4 +12,10 @@ public abstract class Configs {
 	 */
 	public static final String dataDirectory = "C:\\temp";
 	public static final String dataFileType = "csv";
+	
+	/**
+	 * Areas de trabalho
+	 */
+	public static final String[] areas = { "Segurança", "Programação", "Design", "Engenharia de software", "Redes",
+	"Banco de dados" };
 }

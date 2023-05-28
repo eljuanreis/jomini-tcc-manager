@@ -2,12 +2,13 @@ package view;
 
 import java.awt.EventQueue;
 
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import controller.IndexController;
 import controller.StudentController;
 import service.ValidateField;
-import threads.TimeThread;
 
 import java.awt.GridLayout;
 import javax.swing.JLabel;
@@ -16,14 +17,17 @@ import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.SwingConstants;
 
+import components.ActualDate;
+import components.SaveButton;
 import constants.Configs;
 
 import javax.swing.JSeparator;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
+@SuppressWarnings("serial")
 public class RegisterStudent extends JFrame {
 	private JTextField nomeAluno;
 	private JTextField raAluno;
@@ -37,8 +41,6 @@ public class RegisterStudent extends JFrame {
 			public void run() {
 				try {
 					RegisterStudent frame = new RegisterStudent();
-					frame.setLocationRelativeTo(null);
-
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -59,7 +61,8 @@ public class RegisterStudent extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		getContentPane().setLayout(null);
-		
+		this.setLocationRelativeTo(null);
+
 		JLabel lblNewLabel = new JLabel("Cadastrar aluno");
 		lblNewLabel.setFont(new Font("Arial", Font.BOLD, 18));
 		lblNewLabel.setBounds(10, 11, 157, 14);
@@ -110,22 +113,29 @@ public class RegisterStudent extends JFrame {
 		
 		this.controller = new StudentController(this.nomeAluno, this.raAluno);
 		
-		JButton btnNewButton_1 = new JButton("Salvar");
+		JButton btnNewButton = new JButton("Voltar para tela principal");
+		JFrame telaAtual = (JFrame) this;
+
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				IndexController.backToIndex(telaAtual);
+			}
+		});
+		
+		JButton btnNewButton_1 = new SaveButton("Aluno", "salvo");
 		btnNewButton_1.addActionListener(this.controller);
 		panel_2.add(btnNewButton_1);
+		panel_2.add(btnNewButton);
 		
 		JSeparator separator = new JSeparator();
 		separator.setBounds(10, 235, 414, 15);
 		getContentPane().add(separator);
 		
-		JLabel labelDate = new JLabel("....");
+		JLabel labelDate = new ActualDate("....");
 		labelDate.setHorizontalTextPosition(SwingConstants.LEFT);
 		labelDate.setHorizontalAlignment(SwingConstants.RIGHT);
 		labelDate.setBounds(242, 236, 182, 14);
 		getContentPane().add(labelDate);
-	
-		TimeThread timeThread = new TimeThread(labelDate);
-		timeThread.start();
 
 		JLabel softwareVersionLabel = new JLabel(Configs.version);
 		softwareVersionLabel.setBounds(10, 236, 46, 14);
