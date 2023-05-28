@@ -19,6 +19,11 @@ import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.JTextPane;
 import javax.swing.JButton;
+import javax.swing.JSeparator;
+import components.ActualDate;
+import constants.Configs;
+
+import javax.swing.SwingConstants;
 
 @SuppressWarnings("serial")
 public class GetOrientation extends JFrame {
@@ -30,13 +35,17 @@ public class GetOrientation extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public GetOrientation(Orientation orientation, OrientationController oc) {		
-		setBounds(100, 100, 450, 349);
+	public GetOrientation(Orientation orientation, OrientationController oc) {	
+		
+		setTitle("Visualizar Orientação - " + Configs.name);
+		setResizable(false);
+		setBounds(100, 100, 450, 376);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		this.setLocationRelativeTo(null);
 		
 		JPanel panel = new JPanel();
 		panel.setBounds(10, 11, 414, 288);
@@ -89,6 +98,20 @@ public class GetOrientation extends JFrame {
 		panel.add(btnSetAsUncompleted);
 		
 		this.controller = new GetOrientationController(orientation, lblOriTitle, groupCode, textDesc, textStatus, oc);
+		
+		JSeparator separator = new JSeparator();
+		separator.setBounds(10, 311, 414, 15);
+		contentPane.add(separator);
+		
+		ActualDate labelDate = new ActualDate("....");
+		labelDate.setHorizontalTextPosition(SwingConstants.LEFT);
+		labelDate.setHorizontalAlignment(SwingConstants.RIGHT);
+		labelDate.setBounds(235, 312, 182, 14);
+		contentPane.add(labelDate);
+		
+		JLabel softwareVersionLabel = new JLabel("1.0.0");
+		softwareVersionLabel.setBounds(10, 312, 46, 14);
+		contentPane.add(softwareVersionLabel);
 		btnSetAsDone.addActionListener(this.controller);
 		btnSetAsUncompleted.addActionListener(this.controller);
 

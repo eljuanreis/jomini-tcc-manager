@@ -28,7 +28,7 @@ public class GetOrientationController implements ActionListener {
 		this.orientantion = orientation;
 		
 		lblOriTitle.setText(orientation.getTitle());
-		groupCode.setText(orientation.getCode());
+		groupCode.setText(orientation.getCodeGroup());
 		textDesc.setText(orientation.getDescription());
 		
 		this.textStatus = textStatus;
