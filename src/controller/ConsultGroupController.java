@@ -20,7 +20,7 @@ public class ConsultGroupController implements ActionListener, IConsultGroupCont
 	private FileService service;
 	private JTable table;
 	private DefaultTableModel modelTable;
-	private static boolean tableStarted = false;
+	private boolean tableStarted = false;
 	private ObjectList[] hashTable = new ObjectList[constants.Configs.areas.length];
 
 	public ConsultGroupController(DefaultTableModel modelTable, JTable table) {

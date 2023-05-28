@@ -62,7 +62,6 @@ public class OrientationController implements ActionListener, IInsertOrientation
 			while (!data.isEmpty()) {
 				try {
 					Orientation orientation = (Orientation) data.pop();
-					System.out.println(orientation);
 					String[] row = new String[4];
 					row[0] = orientation.getCode();
 					row[1] = orientation.getTitle();
@@ -87,8 +86,6 @@ public class OrientationController implements ActionListener, IInsertOrientation
 		try {
 			oriData = service.readData(fileName);
 		} catch (Exception e) {
-			e.printStackTrace();
-			tableStarted = false;
 			return s;
 		}
 		
