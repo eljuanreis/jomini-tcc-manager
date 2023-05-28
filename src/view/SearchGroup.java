@@ -60,7 +60,7 @@ public class SearchGroup extends JFrame {
 	 * Create the frame.
 	 */
 	public SearchGroup() {
-		this.controller = new SearchGroupController(searchBox);
+		this.controller = new SearchGroupController(searchBox, this);
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 441, 277);

@@ -6,11 +6,12 @@ import java.io.IOException;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 import service.FileService;
-
+import view.Orientation;
 import model.Group;
 
 import br.edu.fateczl.ObjectList;
@@ -20,9 +21,12 @@ public class SearchGroupController implements ActionListener, ISearchGroupContro
 
 	private DefaultComboBoxModel<String> comboBoxList;
 	private JTextField searchBox;
+	private JFrame frame;
 	
-	public SearchGroupController(JTextField searchBox) {
+	public SearchGroupController(JTextField searchBox, JFrame frame) {
 		this.searchBox = searchBox;
+
+		this.frame = frame;
 	}
 	
 	public JTextField getSearchBox() {
@@ -134,14 +138,19 @@ public class SearchGroupController implements ActionListener, ISearchGroupContro
 	}
 	
 	private void groupOrientations(JComboBox<String> combo) {
-		String groupId = (String) combo.getSelectedItem();
+		String codeGroup = (String) combo.getSelectedItem();
 		
-		if (groupId.trim().length() == 0) {
+		if (codeGroup == null || codeGroup.trim().length() == 0) {
 			return;
 		}
-		System.out.println(groupId);
 		
-		
+		try {
+			this.frame.setVisible(false);
+			new Orientation(codeGroup).setVisible(true);;
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 }
