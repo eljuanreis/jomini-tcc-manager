@@ -20,7 +20,7 @@ public class ConsultGroupController implements ActionListener, IConsultGroupCont
 	private FileService service;
 	private JTable table;
 	private DefaultTableModel modelTable;
-	private static boolean tableStarted = false;
+	private boolean tableStarted = false;
 	private ObjectList[] hashTable = new ObjectList[constants.Configs.areas.length];
 
 	public ConsultGroupController(DefaultTableModel modelTable, JTable table) {
@@ -74,7 +74,7 @@ public class ConsultGroupController implements ActionListener, IConsultGroupCont
 				try {
 					hashCode = (int) Integer.parseInt(String.valueOf(code.charAt(0)));
 				} catch (Exception e) {
-					System.out.println(e.getMessage());
+					e.getStackTrace();
 				}
 
 				// Caso seja, executa o resto

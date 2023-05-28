@@ -49,6 +49,7 @@ public class Orientation extends JFrame {
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		setBounds(100, 100, 513, 396);
 		getContentPane().setLayout(null);
+		this.setLocationRelativeTo(null);
 
 		JLabel lblNewLabel = new JLabel("Orientações");
 		lblNewLabel.setFont(new Font("Arial", Font.BOLD, 18));

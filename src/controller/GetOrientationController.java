@@ -28,7 +28,7 @@ public class GetOrientationController implements ActionListener {
 		this.orientantion = orientation;
 		
 		lblOriTitle.setText(orientation.getTitle());
-		groupCode.setText(orientation.getCode());
+		groupCode.setText(orientation.getCodeGroup());
 		textDesc.setText(orientation.getDescription());
 		
 		this.textStatus = textStatus;
@@ -64,8 +64,6 @@ public class GetOrientationController implements ActionListener {
 
 	private void update(String toFind) {
 		try {			
-			System.out.println(String.format(this.fileName, this.orientantion.getCodeGroup()));
-			
 			// Atualizando arquivo
 			this.service.updateLine(String.format(this.fileName, this.orientantion.getCodeGroup()), 
 					this.orientantion.toString(), 

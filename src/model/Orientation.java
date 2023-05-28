@@ -66,5 +66,5 @@ public class Orientation {
 	public String getCodeGroup() {
 		return this.codeGroup;
 	}
-
+	
 }
