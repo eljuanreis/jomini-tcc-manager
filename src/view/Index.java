@@ -74,7 +74,7 @@ public class Index extends JFrame {
 		helloLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		helloLabel.setForeground(Color.WHITE);
 		helloLabel.setFont(new Font("Tahoma", Font.BOLD, 18));
-		helloLabel.setBounds(56, 11, 326, 22);
+		helloLabel.setBounds(39, 11, 326, 22);
 		panel.add(helloLabel);
 
 		JPanel panel_1 = new JPanel();
@@ -155,6 +155,7 @@ public class Index extends JFrame {
 		panel_1.add(separator_1_1);
 		
 		JLabel lblNewLabel_1 = new JLabel("Bem-vindo, selecione uma opção abaixo:");
+		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel_1.setBounds(83, 63, 241, 14);
 		contentPane.add(lblNewLabel_1);
 		

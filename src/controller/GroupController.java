@@ -52,7 +52,6 @@ public class GroupController implements ActionListener, IGroupController {
 		String code = area.split(" ")[0];
 		int rngNum = (int) (Math.random() * 1000);
 		code = code + String.valueOf(rngNum);
-		System.out.println(code);
 
 		int alunosSize = this.modelList.getSize();
 

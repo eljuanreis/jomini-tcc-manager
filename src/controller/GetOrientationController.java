@@ -64,8 +64,6 @@ public class GetOrientationController implements ActionListener {
 
 	private void update(String toFind) {
 		try {			
-			System.out.println(String.format(this.fileName, this.orientantion.getCodeGroup()));
-			
 			// Atualizando arquivo
 			this.service.updateLine(String.format(this.fileName, this.orientantion.getCodeGroup()), 
 					this.orientantion.toString(), 

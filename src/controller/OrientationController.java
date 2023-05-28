@@ -17,7 +17,7 @@ import view.GetOrientation;
 import contracts.IInsertOrientationController;
 
 public class OrientationController implements ActionListener, IInsertOrientationController {
-	private static boolean tableStarted = false;
+	private boolean tableStarted = false;
 	
 	private FileService service = new FileService();
 
@@ -88,6 +88,7 @@ public class OrientationController implements ActionListener, IInsertOrientation
 			oriData = service.readData(fileName);
 		} catch (Exception e) {
 			e.printStackTrace();
+			tableStarted = false;
 			return s;
 		}
 		
