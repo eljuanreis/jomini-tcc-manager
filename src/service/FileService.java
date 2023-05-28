@@ -1,6 +1,7 @@
 package service;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileWriter;
@@ -113,6 +114,52 @@ public class FileService {
 	 */
 	public void setSupressedWarning(boolean condition) {
 		supressWarnings = condition;
+	}
+	
+	public void updateLine(String fileName, String data, int line) throws IOException {
+		File file = new File(makeFilePath(fileName));
+		File tempFile =  new File(makeFilePath(fileName + "temp"));
+		
+		
+		if (file.exists() && file.isFile()) {
+			FileInputStream fluxo = new FileInputStream(file);
+			InputStreamReader leitor = new InputStreamReader(fluxo);
+
+			BufferedReader buffer = new BufferedReader(leitor);
+			BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile));
+
+			String linha = buffer.readLine();
+			
+			String toRead;
+			int lineCount = 0;
+			System.out.println(line);
+			line--;
+			System.out.println(line);
+			while (linha != null) {
+				
+				if (lineCount == line) {
+				    toRead = data;
+				} else {
+					toRead = linha + "\r\n";
+				}
+				
+				writer.write(toRead);
+
+				linha = buffer.readLine();
+				
+				lineCount++;
+			}
+
+			writer.close(); 
+			buffer.close();
+			leitor.close();
+			fluxo.close();
+
+			file.delete();
+			tempFile.renameTo(file);
+		} else {
+			throw new IOException("Arquivo não existe");
+		}
 	}
 
 }

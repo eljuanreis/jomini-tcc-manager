@@ -13,6 +13,7 @@ import br.edu.fateczl.ObjectList;
 import contracts.IConsultGroupController;
 import model.Group;
 import service.FileService;
+import view.Orientation;
 
 public class ConsultGroupController implements ActionListener, IConsultGroupController {
 
@@ -148,7 +149,7 @@ public class ConsultGroupController implements ActionListener, IConsultGroupCont
 			this.modelTable.addColumn("Código");
 			this.modelTable.addColumn("Tema");
 			this.modelTable.addColumn(" ");
-			
+
 			this.addTableOnClick();
 
 			tableStarted = true;
@@ -172,22 +173,30 @@ public class ConsultGroupController implements ActionListener, IConsultGroupCont
 			}
 		}
 	}
-	
+
 	/**
 	 * EventListener de clique na tabela
 	 */
 	private void addTableOnClick() {
 		this.table.addMouseListener(new java.awt.event.MouseAdapter() {
-		    @Override
-		    public void mouseClicked(java.awt.event.MouseEvent evt) {
-		        int row = table.rowAtPoint(evt.getPoint());
-		        int col = table.columnAtPoint(evt.getPoint());
-		        if (row >= 0 && col >= 0 && col == 2) {
-		        	System.out.println(table.getValueAt(row, 0));
-		        }
-		    }
+			@Override
+			public void mouseClicked(java.awt.event.MouseEvent evt) {
+				int row = table.rowAtPoint(evt.getPoint());
+				int col = table.columnAtPoint(evt.getPoint());
+				if (row >= 0 && col >= 0 && col == 2) {
+					String codeGroup = (String) table.getValueAt(row, 0);
+					
+					if (codeGroup.trim().length() > 0) {
+						try {
+							new Orientation(codeGroup).setVisible(true);;
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+				}
+			}
 		});
 	}
-	
-	
+
 }

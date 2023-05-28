@@ -97,7 +97,7 @@ public class Index extends JFrame {
 		imgStudent.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		lblNewLabel.addMouseListener(this.controller);
 		lblNewLabel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		lblNewLabel.setBounds(48, 26, 116, 14);
+		lblNewLabel.setBounds(48, 14, 116, 38);
 
 		JSeparator separator = new JSeparator();
 		separator.setBounds(15, 54, 182, 7);
@@ -114,7 +114,7 @@ public class Index extends JFrame {
 
 		JLabel lblGerenciarProfessores = new JLabel("Cadastrar professores");
 		lblGerenciarProfessores.setName("professorsIndex");
-		lblGerenciarProfessores.setBounds(51, 75, 141, 14);
+		lblGerenciarProfessores.setBounds(51, 63, 141, 38);
 
 		JSeparator separator_1 = new JSeparator();
 		separator_1.setBounds(13, 103, 182, 7);
@@ -127,7 +127,7 @@ public class Index extends JFrame {
 		// ============= GERENCIAR GRUPOS =================== //
 		JLabel lblGerenciarGrupos = new JLabel("Gerenciar grupos");
 		lblGerenciarGrupos.setName("groupsIndex");
-		lblGerenciarGrupos.setBounds(48, 124, 144, 14);
+		lblGerenciarGrupos.setBounds(48, 112, 144, 38);
 
 		JLabel imgGroup = new JLabel("");
 		imgGroup.setName("groupsIndex");
