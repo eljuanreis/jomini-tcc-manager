@@ -132,9 +132,7 @@ public class FileService {
 			
 			String toRead;
 			int lineCount = 0;
-			System.out.println(line);
 			line--;
-			System.out.println(line);
 			while (linha != null) {
 				
 				if (lineCount == line) {
