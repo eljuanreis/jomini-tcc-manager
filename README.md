@@ -7,6 +7,9 @@ This is a system to manage TCC's. It has an academic purpose and therefore recor
 
 Java (JDK 18) and Swing Library
 
+# Software Engine Docs
+https://drive.google.com/drive/folders/12JeAvmVERTqjXwtxU7im9EKiU7mr7WPh?usp=sharing
+
 # Path strucutre
 ```bash 
 ├───images (Image resources)
