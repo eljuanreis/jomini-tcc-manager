@@ -60,6 +60,10 @@ public class SearchGroup extends JFrame {
 	 * Create the frame.
 	 */
 	public SearchGroup() {
+		
+		setTitle("Pesquisar grupo - " + Configs.name);
+		setResizable(false);
+		
 		this.controller = new SearchGroupController(searchBox, this);
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
