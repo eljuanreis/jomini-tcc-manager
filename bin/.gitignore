@@ -1,3 +1,8 @@
-/view/
-/model/
+/components/
+/constants/
+/contracts/
 /controller/
+/model/
+/service/
+/threads/
+/view/
