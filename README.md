@@ -3,6 +3,13 @@
 
 This is a system to manage TCC's. It has an academic purpose and therefore records the information in a csv file. Designed for data structure discipline
 
+# Group
+
+### Software Engine: Beatriz Regina, Emerson Johnny, João Gonçalves, Juan Reis, Kelvin Santana and Lais Aparecida
+
+### Data structure: Juan Reis, Kelvin Santana and Lais Aparecida
+
+
 # Technologies
 
 Java (JDK 18) and Swing Library. Start on view/Index.java
