@@ -5,9 +5,11 @@ This is a system to manage TCC's. It has an academic purpose and therefore recor
 
 # Group
 
-### Software Engine: Beatriz Regina, Emerson Johnny, João Gonçalves, Juan Reis, Kelvin Santana and Lais Aparecida
+### Software Engine: 
+Beatriz Regina, Emerson Johnny, João Gonçalves, Juan Reis, Kelvin Santana and Lais Aparecida
 
-### Data structure: Juan Reis, Kelvin Santana and Lais Aparecida
+### Data structure: 
+Juan Reis, Kelvin Santana and Lais Aparecida
 
 
 # Technologies
