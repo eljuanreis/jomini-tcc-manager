@@ -16,7 +16,7 @@ Juan Reis, Kelvin Santana and Lais Aparecida
 
 Java (JDK 18) and Swing Library. Start on view/Index.java
 
-# Software Engine Docs
+# Software Engine Docs (For data structure)
 https://drive.google.com/drive/folders/12JeAvmVERTqjXwtxU7im9EKiU7mr7WPh?usp=sharing
 
 # Path strucutre
